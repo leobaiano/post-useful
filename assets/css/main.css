@@ -1,0 +1,36 @@
+.wrap-post-useful{
+	width:100%;
+	overflow: hidden;
+	padding:10px;
+	background: #fff;
+	border: 1px solid;
+	border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+	-webkit-border-radius: 3px;
+}
+	.wrap-post-useful p{
+		float:left;
+		margin:0 15px 0 0;
+	}
+
+	.post-useful-buttons{
+		float:left;
+		overflow:hidden;
+	}
+		.post-useful-vote{
+			float:left;
+			text-indent: 100%;
+			white-space: nowrap;
+			overflow: hidden;
+			width:32px;
+			height:32px;
+			display: inline-block;
+			text-decoration: none;
+			border:0;
+		}
+			.post-useful-vote-yes{
+				background:url("../images/yes.png");
+			}
+			.post-useful-vote-no{
+				background:url("../images/no.png");
+				margin-left:10px;
+			}
