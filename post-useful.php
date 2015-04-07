@@ -131,7 +131,6 @@
 			$user_ip = $_SERVER['REMOTE_ADDR'];
 
 			$check = self::check_rate( $post_id, $user_ip );
-			$class_rate = '';
 			if ( ! empty( $check ) ) {
 				$user_rate = $check->rating;
 			}
