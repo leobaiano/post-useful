@@ -1,7 +1,7 @@
 Post Useful
 ===========
 
-Allows users to enter if the post is useful or not.
+WordPress plugin that includes a poll in posts for users to tell if the post was helpful.
 
 ## About ##
 
@@ -18,7 +18,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 This plugin includes posts in the user option to inform the post content helped or not. It is suitable for use on blogs and websites that publish tutorials and recipes that help users.
 
-== Installation ==
+## Installation ##
 
 To install just follow the installation steps of most WordPress plugin's:
 
