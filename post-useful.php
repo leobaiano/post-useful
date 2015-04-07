@@ -100,7 +100,7 @@
 
 			if ( $wpdb->get_var( "SHOW TABLES LIKE '$table'" ) != $table ) {
 				require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-				
+
 				$sql = "CREATE TABLE IF NOT EXISTS `$table` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 				  `post_id` int(11) NOT NULL,
@@ -130,17 +130,23 @@
 			$post_id = get_the_ID();
 			$user_ip = $_SERVER['REMOTE_ADDR'];
 
+			$active_yes = '';
+			$active_no = '';
 			$check = self::check_rate( $post_id, $user_ip );
 			if ( ! empty( $check ) ) {
 				$user_rate = $check->rating;
+				if( $user_rate == 0 )
+					$active_no = ' post_useful_active';
+				else
+					$active_yes = ' post_useful_active';
 			}
 
 			$box_useful_rate = '<div class="wrap-post-useful post_useful_' . get_the_ID() . '">' . "\n";
 				$box_useful_rate .= '<p>' . __( 'This content has been helpful to you?', 'post_useful' ) . '</p>' . "\n";
 				$box_useful_rate .= '<p class="post_useful_success post_useful_success_' . get_the_ID() . '">' . __( 'Thanks for contributing!', 'post_useful' ) . '</p>' . "\n";
 				$box_useful_rate .= '<div class="post-useful-buttons post_useful_buttons_' . get_the_ID() . '">' . "\n";
-					$box_useful_rate .= '<a href="javascript:;" title="' . __( 'Yes', 'post_useful' ) . '" class="post-useful-vote post-useful-vote-yes" data-id="' . get_the_ID() . '" data-rate="1">Yes</a>' . "\n";
-					$box_useful_rate .= '<a href="javascript:;" title="' . __( 'No', 'post_useful' ) . '" class="post-useful-vote post-useful-vote-no" data-id="' . get_the_ID() . '" data-rate="0">No</a>' . "\n";
+					$box_useful_rate .= '<a href="javascript:;" title="' . __( 'Yes', 'post_useful' ) . '" class="post-useful-vote post-useful-vote-yes' . $active_yes . '" data-id="' . get_the_ID() . '" data-rate="1">Yes</a>' . "\n";
+					$box_useful_rate .= '<a href="javascript:;" title="' . __( 'No', 'post_useful' ) . '" class="post-useful-vote post-useful-vote-no' . $active_no . '" data-id="' . get_the_ID() . '" data-rate="0">No</a>' . "\n";
 				$box_useful_rate .= '</div>' . "\n";
 			$box_useful_rate .= '</div>' . "\n";
 
@@ -186,14 +192,15 @@
 				$data = array(
 								'post_id'	=>	$post_id,
 								'rating'	=>	$rate,
-								'user_ip'	=>	$user_ip,
-								'created'	=> date( 'Y-m-d H:i' )
+								'user_ip'	=>	$user_ip
 							);
 				$wpdb->insert( $table, $data );
 				echo 'ok';
 			}
-			else
-				echo 'erro';
+			else{
+				$wpdb->update( $table, array( 'rating' => $rate	), array( 'post_id' => $post_id, 'user_ip' => $user_ip ) );
+				echo 'ok';
+			}
 			wp_die();
 		}
 	}

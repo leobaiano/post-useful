@@ -12,6 +12,9 @@
 			};
 			$.post( postUsefulAjax.ajaxurl, data, function(response) {
 				if( response == 'ok' ){
+					$( '.post_useful_buttons_' + post_id + ' a' ).css( 'background-position', '0 0');
+					$( '.post_useful_buttons_' + post_id + ' a' ).removeClass( 'post_useful_active' );
+					$( '.post_useful_success_' + post_id ).css( 'background-position', '0 0');
 					$( clicked ).css( 'background-position', '0 32px' );
 					$( '.post_useful_' + post_id + ' p' ).css( 'display', 'none' );
 					$( '.post_useful_success_' + post_id ).css( 'display', 'block');
