@@ -20,6 +20,13 @@
 	class Post_Useful {
 
 		/**
+		 * Global $wpdb
+		 * 
+		 * @var object
+		 */
+		private $wpdb;
+
+		/**
 		 * Instance of this class.
 		 *
 		 * @var object
@@ -27,11 +34,30 @@
 		protected static $instance = null;
 
 		/**
+		 * Define DB version
+		 */
+		protected static $post_useful_db_version = '1.0';
+
+		/**
+		 * Table in DB
+		 * 
+		 * @var string
+		 */
+		private $table;
+
+		/**
 		 * Initialize the plugin
 		 */
 		private function __construct() {
+			global $wpdb;
+			$this->wpdb = $wpdb;
+			$this->table = $wpdb->prefix . 'post_useful';
+
 			// Load plugin text domain
 			add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
+
+			// Create table in DB
+			add_action( 'init', array( $this, 'create_table' ) );
 
 			// Load scripts js and styles css
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 999 );
@@ -66,6 +92,28 @@
 		}
 
 		/**
+		 * Create table Rating
+		 */
+		public function create_table() {
+			$wpdb = $this->wpdb;
+			$table = $this->table;
+
+			if ( $wpdb->get_var( "SHOW TABLES LIKE '$table'" ) != $table ) {
+				require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+				
+				$sql = "CREATE TABLE IF NOT EXISTS `$table` (
+				  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+				  `post_id` int(11) NOT NULL,
+				  `rating` int(1) NOT NULL,
+				  `user_ip` varchar(13) NOT NULL,
+				  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+				  `status` int(1) NOT NULL
+				);";
+				dbDelta( $sql );
+			}
+		}
+
+		/**
 		 * Require classes admin
 		 */
 		protected function require_admin() {
@@ -79,11 +127,21 @@
 		 * @return string $content - Post Original Content More Useful Question
 		 */
 		public function print_useful( $content ) {
-			$box_useful_rate = '<div class="wrap-post-useful">' . "\n";
+			$post_id = get_the_ID();
+			$user_ip = $_SERVER['REMOTE_ADDR'];
+
+			$check = self::check_rate( $post_id, $user_ip );
+			$class_rate = '';
+			if ( ! empty( $check ) ) {
+				$user_rate = $check->rating;
+			}
+
+			$box_useful_rate = '<div class="wrap-post-useful post_useful_' . get_the_ID() . '">' . "\n";
 				$box_useful_rate .= '<p>' . __( 'This content has been helpful to you?', 'post_useful' ) . '</p>' . "\n";
-				$box_useful_rate .= '<div class="post-useful-buttons">' . "\n";
-					$box_useful_rate .= '<a href="javascript:;" title="' . __( 'Yes', 'post_useful' ) . '" class="post-useful-vote post-useful-vote-yes" data-id="' . get_the_ID() . '" data-rate="yes">Yes</a>' . "\n";
-					$box_useful_rate .= '<a href="javascript:;" title="' . __( 'No', 'post_useful' ) . '" class="post-useful-vote post-useful-vote-no" data-id="' . get_the_ID() . '" data-rate="no">No</a>' . "\n";
+				$box_useful_rate .= '<p class="post_useful_success post_useful_success_' . get_the_ID() . '">' . __( 'Thanks for contributing!', 'post_useful' ) . '</p>' . "\n";
+				$box_useful_rate .= '<div class="post-useful-buttons post_useful_buttons_' . get_the_ID() . '">' . "\n";
+					$box_useful_rate .= '<a href="javascript:;" title="' . __( 'Yes', 'post_useful' ) . '" class="post-useful-vote post-useful-vote-yes" data-id="' . get_the_ID() . '" data-rate="1">Yes</a>' . "\n";
+					$box_useful_rate .= '<a href="javascript:;" title="' . __( 'No', 'post_useful' ) . '" class="post-useful-vote post-useful-vote-no" data-id="' . get_the_ID() . '" data-rate="0">No</a>' . "\n";
 				$box_useful_rate .= '</div>' . "\n";
 			$box_useful_rate .= '</div>' . "\n";
 
@@ -100,11 +158,71 @@
 		}
 
 		/**
+		 * Check if user classify post
+		 * 
+		 * @param int $post_id
+		 * @param string $user_ip
+		 * @return boolean true or false
+		 */
+		public function check_rate( $post_id, $user_ip ) {
+			$wpdb = $this->wpdb;
+			$table = $this->table;
+
+			$check = $wpdb->get_row("SELECT * FROM $table WHERE post_id = '$post_id' AND user_ip = '$user_ip'");
+			return $check;
+		}
+
+		/**
 		 * Send rate
 		 */
 		public function send_rate() {
-			echo "te: " . $_POST['post'];
+			$wpdb = $this->wpdb;
+			$table = $this->table;
+
+			$post_id = sanitize_text_field( $_POST['post'] );
+			$rate = sanitize_text_field( $_POST['rate'] );
+			$user_ip = $_SERVER['REMOTE_ADDR'];
+			$check = self::check_rate( $post_id, $user_ip );
+			if ( empty( $check ) ) {
+				$data = array(
+								'post_id'	=>	$post_id,
+								'rating'	=>	$rate,
+								'user_ip'	=>	$user_ip,
+								'created'	=> date( 'Y-m-d H:i' )
+							);
+				$wpdb->insert( $table, $data );
+				echo 'ok';
+			}
+			else
+				echo 'erro';
 			wp_die();
 		}
 	}
 	add_action( 'plugins_loaded', array( 'Post_Useful', 'get_instance' ), 0 );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
