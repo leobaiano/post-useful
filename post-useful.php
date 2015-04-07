@@ -43,7 +43,7 @@
 		 * 
 		 * @var string
 		 */
-		private $table;
+		private $table = '';
 
 		/**
 		 * Initialize the plugin
@@ -52,12 +52,9 @@
 			global $wpdb;
 			$this->wpdb = $wpdb;
 			$this->table = $wpdb->prefix . 'post_useful';
-
+			
 			// Load plugin text domain
 			add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
-
-			// Create table in DB
-			add_action( 'init', array( $this, 'create_table' ) );
 
 			// Load scripts js and styles css
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 999 );
@@ -82,6 +79,10 @@
 			return self::$instance;
 		}
 
+		public static function activate() {
+			self::create_table();
+		}	
+
 		/**
 		 * Load the plugin text domain for translation.
 		 *
@@ -94,23 +95,27 @@
 		/**
 		 * Create table Rating
 		 */
-		public function create_table() {
-			$wpdb = $this->wpdb;
-			$table = $this->table;
+		public static function create_table() {
+			global $wpdb;
 
-			if ( $wpdb->get_var( "SHOW TABLES LIKE '$table'" ) != $table ) {
-				require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			$table = $wpdb->prefix . 'post_useful';
 
-				$sql = "CREATE TABLE IF NOT EXISTS `$table` (
-				  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-				  `post_id` int(11) NOT NULL,
-				  `rating` int(1) NOT NULL,
-				  `user_ip` varchar(13) NOT NULL,
-				  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-				  `status` int(1) NOT NULL
-				);";
-				dbDelta( $sql );
-			}
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+			$charset_collate = $wpdb->get_charset_collate();
+
+			$sql = "CREATE TABLE IF NOT EXISTS `$table` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+			  `post_id` int(11) NOT NULL,
+			  `rating` int(1) NOT NULL,
+			  `user_ip` varchar(13) NOT NULL,
+			  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+			  `status` int(1) NOT NULL
+			) $charset_collate;";
+
+			dbDelta( $sql );
+
+			update_option('post_useful_db_version', self::$post_useful_db_version);
 		}
 
 		/**
@@ -204,6 +209,7 @@
 			wp_die();
 		}
 	}
+	register_activation_hook( __FILE__ , array( 'Post_Useful', 'activate') );
 	add_action( 'plugins_loaded', array( 'Post_Useful', 'get_instance' ), 0 );
 
 
