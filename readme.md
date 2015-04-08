@@ -5,7 +5,7 @@ WordPress plugin that includes a poll in posts for users to tell if the post was
 
 ## About ##
 
-Contributors: leobaiano
+Contributors: leobaiano, nicholasio
 Donate link: http://lbideias.com.br/donate
 Tags: vote, rate, useful
 Requires at least: 3.8

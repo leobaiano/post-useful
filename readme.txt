@@ -1,5 +1,5 @@
 === Post Useful ===
-Contributors: leobaiano
+Contributors: leobaiano, nicholas_io
 Donate link: http://lbideias.com.br/donate
 Tags: vote, rate, useful
 Requires at least: 3.8
