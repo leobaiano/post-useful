@@ -31,7 +31,6 @@
 		}
 			.post-useful-vote-yes{
 				background-image:url("../images/yes_hover.png");
-				background-position: 0 0;
 			}
 				.post-useful-vote-yes:hover{ background-position: 0 32px; }
 			.post-useful-vote-no{
@@ -40,3 +39,25 @@
 			}
 				.post-useful-vote-no:hover{ background-position: 0 32px; }
 			.post_useful_active{ background-position: 0 32px; }
+
+/* Admin Styles */
+.post-useful-metabox {
+	float:none !important;
+}
+.post-useful-metabox .post-useful-vote {
+	width: 55px;
+	padding-left: 35px;
+	line-height: 32px;
+	background-repeat: no-repeat;
+	text-indent: 0;
+}
+
+.post-useful-metabox .post-useful-vote-no {
+	position: relative;
+	top: 1px;
+}
+
+.post-useful-metabox > .post-useful-vote-yes:hover,
+.post-useful-metabox > .post-useful-vote-no:hover {
+	background-position: 0 0 !important;
+}

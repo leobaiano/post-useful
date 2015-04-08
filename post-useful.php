@@ -20,6 +20,12 @@
 	class Post_Useful {
 
 		/**
+		 * Pluglin Slug
+		 * @var strng
+		 */
+		public static $plugin_slug = 'post_useful';
+
+		/**
 		 * Global $wpdb
 		 * 
 		 * @var object
@@ -43,7 +49,7 @@
 		 * 
 		 * @var string
 		 */
-		private $table = '';
+		public $table = '';
 
 		/**
 		 * Initialize the plugin
@@ -64,6 +70,7 @@
 
 			// Ajax send rate
 			add_action( 'wp_ajax_send_rate', array( $this, 'send_rate' ) );
+			add_action( 'wp_ajax_nopriv_send_rate', array( $this, 'send_rate' ) );
 		}
 
 		/**
@@ -116,13 +123,6 @@
 			dbDelta( $sql );
 
 			update_option('post_useful_db_version', self::$post_useful_db_version);
-		}
-
-		/**
-		 * Require classes admin
-		 */
-		protected function require_admin() {
-			require_once 'admin/class-post-useful-options.php';
 		}
 
 		/**
@@ -209,8 +209,15 @@
 			wp_die();
 		}
 	}
+
 	register_activation_hook( __FILE__ , array( 'Post_Useful', 'activate') );
 	add_action( 'plugins_loaded', array( 'Post_Useful', 'get_instance' ), 0 );
+
+	if ( is_admin() ) {
+		require_once( plugin_dir_path( __FILE__ ) . 'admin/class-post-useful-options.php' );
+		add_action('after_setup_theme', array('Post_Useful_Options', 'get_instance') );
+	}
+
 
 
 
