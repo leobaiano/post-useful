@@ -30,12 +30,11 @@
 			border:0;
 		}
 			.post-useful-vote-yes{
-				background:url("../images/yes_hover.png") no-repeat;
-				background-position: 0 0;
+				background-image:url("../images/yes_hover.png");
 			}
 				.post-useful-vote-yes:hover{ background-position: 0 32px; }
 			.post-useful-vote-no{
-				background:url("../images/no_hover.png") no-repeat;
+				background-image:url("../images/no_hover.png");
 				margin-left:10px;
 			}
 				.post-useful-vote-no:hover{ background-position: 0 32px; }
@@ -49,7 +48,7 @@
 	width: 55px;
 	padding-left: 35px;
 	line-height: 32px;
-	
+	background-repeat: no-repeat;
 	text-indent: 0;
 }
 

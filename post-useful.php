@@ -70,6 +70,7 @@
 
 			// Ajax send rate
 			add_action( 'wp_ajax_send_rate', array( $this, 'send_rate' ) );
+			add_action( 'wp_ajax_nopriv_send_rate', array( $this, 'send_rate' ) );
 		}
 
 		/**

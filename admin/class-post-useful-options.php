@@ -18,12 +18,25 @@ class Post_Useful_Options {
 
 	/**
 	 * Instance of the main class
+	 * 
+	 * @var object
 	 */
 	protected $post_useful_class = null;
 
+
+	/**
+	 * Posts types where we need to show statistics metabox
+	 * 
+	 * @var array
+	 */
 	protected $post_types_metabox;
 
-	protected $wpdb;
+	/**
+	 * Global $wpdb
+	 * 
+	 * @var object
+	 */
+	private $wpdb;
 
 	public function __construct() {
 		global $wpdb;
@@ -70,6 +83,9 @@ class Post_Useful_Options {
 		
 	}
 
+	/**
+	 * Add a meta box to a post edit screen
+	 */
 	public function statistics_metabox() {
 		add_meta_box(
 			$this->statistics_metabox_slug,
@@ -81,11 +97,20 @@ class Post_Useful_Options {
 		);
 	}
 
-	public function statistics_metabox_display() {
-		$vote_yes = $this->wpdb->get_var( $this->wpdb->prepare('SELECT rating FROM ' . $this->post_useful_class->table .' WHERE post_id = %d', 
-							  array(get_the_ID() ) ) );
 
-		$vote_no  = 0;
+	/**
+	 * Display the contento of the statistics metabox
+	 */
+	public function statistics_metabox_display() {
+		$vote_yes = $this->wpdb->get_var( 
+								$this->wpdb->prepare('SELECT COUNT(*) FROM ' . $this->post_useful_class->table .' WHERE post_id = %d AND rating = %d', 
+							  	array(get_the_ID(), 1) ) 
+							);
+
+		$vote_no = $this->wpdb->get_var( 
+								$this->wpdb->prepare('SELECT COUNT(*) FROM ' . $this->post_useful_class->table .' WHERE post_id = %d AND rating = %d', 
+							  	array(get_the_ID(), 0) ) 
+							);
 
 		$metabox = '<div class="post-useful-buttons post-useful-metabox">';
 			$metabox .= '<span class="post-useful-vote post-useful-vote-yes">' . $vote_yes . '</span>';
