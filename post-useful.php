@@ -96,7 +96,7 @@
 		 * @return void
 		 */
 		public function load_plugin_textdomain() {
-			load_plugin_textdomain( 'pimap', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+			load_plugin_textdomain( 'post_useful', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		}
 
 		/**
