@@ -29,3 +29,11 @@ e.g.
 3. Upload folder post-useful, you just unzip to `/wp-content/plugins/` directory;
 4. Activate the plugin through the `Plugins` menu in WordPress;
 5. Be happy.
+
+== Screenshots ==
+
+1. Box for the user to sort the content.
+
+2. Once the user sorts the post.
+
+3. Box displaying the post classifications on the edit page.

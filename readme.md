@@ -30,6 +30,17 @@ e.g.
 4. Activate the plugin through the `Plugins` menu in WordPress;
 5. Be happy.
 
+## Screenshots ##
+
+![Box for the user to sort the content.](/screenshot-1.png?raw=true)
+Box for the user to sort the content.
+
+![Once the user sorts the post.](/screenshot-2.png?raw=true)
+Once the user sorts the post.
+
+![Box displaying the post classifications on the edit page.](/screenshot-3.png?raw=true)
+Box displaying the post classifications on the edit page.
+
 ## Want to Collaborate? ##
 
 1. Take a [fork](https://help.github.com/articles/fork-a-repo/) repository;
