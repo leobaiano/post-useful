@@ -30,6 +30,10 @@ e.g.
 4. Activate the plugin through the `Plugins` menu in WordPress;
 5. Be happy.
 
+## Credits ##
+
+Translate: Marco Andrei <contact@marcoandrei.com>, Leo Baiano <ljunior2005@gmail.com>
+
 ## Screenshots ##
 
 ![Box for the user to sort the content.](/screenshot-1.png?raw=true)

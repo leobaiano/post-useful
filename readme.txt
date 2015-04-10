@@ -37,3 +37,7 @@ e.g.
 2. Once the user sorts the post.
 
 3. Box displaying the post classifications on the edit page.
+
+= Credits =
+
+* Translate: Marco Andrei <contact@marcoandrei.com>, Leo Baiano <ljunior2005@gmail.com>
