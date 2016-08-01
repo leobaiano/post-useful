@@ -5,7 +5,7 @@
 	 * Description: Allows users to enter if the post is useful or not
 	 * Author: leobaiano
 	 * Author URI: http://lbideias.com.br
-	 * Version: 1.0.0
+	 * Version: 1.0.1
 	 * License: GPLv2 or later
 	 * Text Domain: post_useful
  	 * Domain Path: /languages/

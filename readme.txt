@@ -3,8 +3,8 @@ Contributors: leobaiano, nicholas_io
 Donate link: http://lbideias.com.br/donate
 Tags: vote, rate, useful
 Requires at least: 3.8
-Tested up to: 4.1.1
-Stable tag: 1.0.0
+Tested up to: 4.5.3
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,3 +41,9 @@ e.g.
 = Credits =
 
 * Translate: Marco Andrei <contact@marcoandrei.com>, Leo Baiano <ljunior2005@gmail.com>
+
+== Changelog ==
+
+= 1.0.1 2016-08-01 =
+
+* Adds internationalization of string in voting buttons

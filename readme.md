@@ -9,8 +9,8 @@ Contributors: leobaiano, nicholasio
 Donate link: http://lbideias.com.br/donate
 Tags: vote, rate, useful
 Requires at least: 3.8
-Tested up to: 4.1.1
-Stable tag: 1.0.0
+Tested up to: 4.5.3
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,12 @@ Once the user sorts the post.
 
 ![Box displaying the post classifications on the edit page.](/screenshot-3.png?raw=true)
 Box displaying the post classifications on the edit page.
+
+## Changelog ##
+
+= 1.0.1 2016-08-01 =
+
+* Adds internationalization of string in voting buttons
 
 ## Want to Collaborate? ##
 
