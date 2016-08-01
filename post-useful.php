@@ -150,8 +150,8 @@
 				$box_useful_rate .= '<p>' . __( 'This content has been helpful to you?', 'post_useful' ) . '</p>' . "\n";
 				$box_useful_rate .= '<p class="post_useful_success post_useful_success_' . get_the_ID() . '">' . __( 'Thanks for contributing!', 'post_useful' ) . '</p>' . "\n";
 				$box_useful_rate .= '<div class="post-useful-buttons post_useful_buttons_' . get_the_ID() . '">' . "\n";
-					$box_useful_rate .= '<a href="javascript:;" title="' . __( 'Yes', 'post_useful' ) . '" class="post-useful-vote post-useful-vote-yes' . $active_yes . '" data-id="' . get_the_ID() . '" data-rate="1">Yes</a>' . "\n";
-					$box_useful_rate .= '<a href="javascript:;" title="' . __( 'No', 'post_useful' ) . '" class="post-useful-vote post-useful-vote-no' . $active_no . '" data-id="' . get_the_ID() . '" data-rate="0">No</a>' . "\n";
+					$box_useful_rate .= '<a href="javascript:;" title="' . __( 'Yes', 'post_useful' ) . '" class="post-useful-vote post-useful-vote-yes' . $active_yes . '" data-id="' . get_the_ID() . '" data-rate="1">' . __( 'Yes', 'post_useful' ) . '</a>' . "\n";
+					$box_useful_rate .= '<a href="javascript:;" title="' . __( 'No', 'post_useful' ) . '" class="post-useful-vote post-useful-vote-no' . $active_no . '" data-id="' . get_the_ID() . '" data-rate="0">' . __( 'No', 'post_useful' ) . '</a>' . "\n";
 				$box_useful_rate .= '</div>' . "\n";
 			$box_useful_rate .= '</div>' . "\n";
 
